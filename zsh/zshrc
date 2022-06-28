@@ -1,0 +1,102 @@
+# .zshrc
+# gryzlee
+# Modified oh-my-zsh run command (in /usr/share/oh-my-zsh/zshrc)
+# Check GitHub for documentation 
+# https://github.com/ohmyzsh/ohmyzsh/wiki/Settings
+
+# ### SHELL CONFIG ###
+# Path to oh-my-zsh (themes, plugins, etc...) 
+ZSH=/usr/share/oh-my-zsh/
+
+# --- zsh configuration --- 
+# zsh theme 
+ZSH_THEME="jonathan"
+# Remind me to periodically update 
+zstyle ':omz:update' mode reminder  
+# Dots while waiting for autocompletion 
+COMPLETION_WAITING_DOTS="true"
+# Plugins 
+plugins=(
+    zsh-autosuggestions
+    sudo
+    dirhistory
+    git
+)
+
+# --- Get oh-my-zsh defaults if not specified ---
+ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
+if [[ ! -d $ZSH_CACHE_DIR ]]; then
+  mkdir $ZSH_CACHE_DIR
+fi
+source $ZSH/oh-my-zsh.sh
+
+# --- User configuration ---
+# Uses neovim as default editor
+export EDITOR=nvim
+# Starts ssh-agent for key-based authentication
+eval "$(ssh-agent -s)" >> /dev/null && ssh-add -q ~/.ssh/id_ed25519 
+
+# ### Aliases ###
+
+# --- Quick access to config files ---
+alias i3conf="vim $HOME/.config/i3/config"
+alias zshconf="vim $HOME/.zshrc"
+alias vimconf="vim $HOME/.config/nvim/init.vim"
+
+# --- Commonly used programs --- 
+# Verbose commands as default
+alias cp="cp -v"
+alias mv="mv -v"
+alias rm="rm -Iv"       # Additionaly be interactive
+alias rmdir="rmdir -v"  
+alias ln="ln -v"
+alias chown="chown -v"
+alias chgrp="chgrp -v"
+alias chmod="chmod -v"
+# Use neovim instead of vim, while using same command
+alias vim="nvim"
+
+# --- pacman ---
+alias pacsize="pacman -Qie | egrep '^(Name|Installed)' | cut -f2 -d':' | paste - - | column -t | sort -nrk 2 | grep MiB | less"
+
+# --- NFS ---
+# Update NAS with local data
+alias live2local="" 
+
+# Update local data with NAS 
+alias local2live=""
+
+# --- Git aliases --- 
+
+# INITIALIZE (REPO)
+alias gi="git init"
+
+# REMOTE ADD (HTTPS/SSH) / CLONE
+# Format: user/repo
+function grah() {
+        git remote add origin "https://github.com/$1"
+}
+function gras() {
+        git remote add origin "git@github.com:$1"
+}
+function grc() {
+        git clone "https://github.com/$1" 
+}
+
+# ADD (FILES) 
+alias ga="git add"
+
+# COMMIT (STAGED)/ ROLLBACK (TO PREVIOUS COMMIT) / REVERT (TO LAST COMMIT)
+alias gco="git commit -m"
+alias gcrb="git reset HEAD~1"
+alias gcre="git checkout"
+
+# PUSH/PULL
+alias gps="git push -u origin"
+alias gpl="git pull origin"
+
+# INFO
+alias gcs="git status"
+alias gch="git log"
+alias grs="git remote -v"
+alias grd="git diff"

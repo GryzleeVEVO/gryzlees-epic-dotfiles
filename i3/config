@@ -1,0 +1,279 @@
+# $HOME/.config/i3/config
+# gryzlee's i3 custom config
+
+# Based on: 
+#	- i3 default config
+#	- i3 documentation: https://i3wm.org/docs/userguide.html
+# 	- Alex Booker's guide: https://www.youtube.com/playlist?list=PL5ze0DjYv5DbCv9vNEzFmP6sU7ZmkGzcf
+
+
+# ----------------- 1. FORMALITIES  -----------------  
+
+# XDG autostart (X and window manager stuff)
+exec --no-startup-id dex --autostart --environment i3
+
+# -----------------  2. ALIASES  -----------------
+
+# Use Windows/Command/Super key for shortcuts 
+set $mod Mod4
+
+# **************  WORKSPACES  ************** 
+# Requires font "Awesome" (awesome-terminal-fonts in pacman)
+set $ws1 "1:  Terminal"
+set $ws2 "2:  Browser" 
+set $ws3 "3:  Explorer"
+set $ws4 "4:  Discord"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:  System"
+set $ws10 "10:  Misc"
+
+# Restart i3status 
+set $refresh_i3status killall -SIGUSR1 i3status
+
+# **************  COLOURS  ************** 
+set $bg-color		    	#3a3e3d20
+set $border-color		    #3a3e3d20
+set $text-color			    #ffffff
+set $inactive-bg-color		#3a3e3d20
+set $inactive-border-color	#3a3e3d20
+set $inactive-text-color	#7f7f7f
+set $urgent-bg-color		#fe8a71
+set $urgent-border-color	#fe8a71
+
+set $bg-color-no-t		        #3a3e3d
+set $border-color-no-t	        #3a3e3d
+set $inactive-bg-color-no-t	    #3a3e3d
+set $inactive-border-color-no-t	#3a3e3d
+set $urgent-bg-color-no-t	    #fe8a71
+set $urgent-border-color-no-t   #fe8a71
+
+# -----------------  3. FONTS  -----------------
+
+font pango:Source Code 10 
+
+# -----------------  4. SHORTCUTS  -----------------  
+
+# **************  MOVEMENT  **************  
+
+# Move between windows 
+bindsym $mod+h 		        focus   left
+bindsym $mod+j 		        focus   down
+bindsym $mod+k 		        focus   up 
+bindsym $mod+l 		        focus   right
+
+bindsym $mod+Left 	        focus   left
+bindsym $mod+Down 	        focus   down
+bindsym $mod+Up 	        focus   up 
+bindsym $mod+Right 	        focus   right
+
+# Move windows themselves
+bindsym $mod+Shift+h 		move    left
+bindsym $mod+Shift+j 		move    down
+bindsym $mod+Shift+k 		move    up 
+bindsym $mod+Shift+l 		move    right
+
+bindsym $mod+Shift+Left 	move    left
+bindsym $mod+Shift+Down 	move    down
+bindsym $mod+Shift+Up	 	move    up 
+bindsym $mod+Shift+Right 	move    right
+
+# Resize windows 
+bindsym $mod+Ctrl+h 	    resize 	grow 	width 	10 px or 10 ppt
+bindsym $mod+Ctrl+j 	    resize 	shrink 	height 	10 px or 10 ppt
+bindsym $mod+Ctrl+k 	    resize 	grow	height 	10 px or 10 ppt
+bindsym $mod+Ctrl+l 	    resize 	shrink	width 	10 px or 10 ppt
+
+bindsym $mod+Ctrl+Left 	    resize 	grow	width 	10 px or 10 ppt
+bindsym $mod+Ctrl+Down 	    resize 	shrink 	height 	10 px or 10 ppt
+bindsym $mod+Ctrl+Up 	    resize  grow	height	10 px or 10 ppt
+bindsym $mod+Ctrl+Right     resize 	shrink 	width 	10 px or 10 ppt
+
+# Change gap size
+bindsym $mod+plus  gaps inner all plus  5
+bindsym $mod+minus gaps inner all minus 5
+
+# Move between workspaces 
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move window to workspace 
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Focus floating/tiling windows 
+bindsym $mod+space focus mode_toggle
+
+# Move back to parent window 
+bindsym $mod+a focus parent
+
+# Hold shortcut key to move floating windows 
+floating_modifier $mod 
+
+# **************  WINDOW LAYOUT  ************** 
+
+# Horizontal/vertical splitting 
+bindsym $mod+b split h
+bindsym $mod+v split v
+
+# Full screen 
+bindsym $mod+f fullscreen toggle
+
+# Change to stack/tab/tile view 
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed 
+bindsym $mod+e layout toggle split 
+
+# Toggle window to floating/tiling 
+bindsym $mod+Shift+space floating toggle
+
+# **************  CONTROL  ************** 
+
+# Kill window 
+bindsym $mod+Shift+q kill
+
+# Reload this file 
+bindsym $mod+Shift+c reload
+
+# Reload i3 in-place 
+bindsym $mod+Shift+r restart
+
+# Exit i3 
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar \
+--font 'pango:Source Code 10' -t warning \
+-m 'Do you really want to exit i3?' \
+-B 'Yes, exit i3' 'i3-msg exit'"
+
+# Shutdown or restart 
+bindsym $mod+Shift+p exec --no-startup-id "i3-nagbar \
+--font 'pango:Source Code 10' -t warning \
+-m 'Do you really want to shut down?' \
+-B 'Restart' 'exec systemctl reboot' \
+-B 'Shut down' 'exec systemctl poweroff'"
+
+# Volume/mute/deafen media keys
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume \
+@DEFAULT_SINK@ 		+5% 	&& $refresh_i3status 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume \
+@DEFAULT_SINK@ 		-5% 	&& $refresh_i3status 
+bindsym XF86AudioMute 	     exec --no-startup-id pactl set-sink-mute \
+@DEFAULT_SINK@ 		toggle 	&& $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute	\
+@DEFAULT_SOURCE@ 	toggle 	&& $refresh_i3status
+
+# Brightness media keys  
+bindsym XF86MonBrightnessUp 	exec --no-startup-id xbacklight -inc 5
+bindsym XF86MonBrightnessDown	exec --no-startup-id xbacklight -dec 5
+
+# **************  PROGRAMAS  **************  
+
+# dmenu (launcher)
+bindsym $mod+d exec --no-startup-id dmenu_run -p "Run: " \
+-nb "$bg-color-no-t" -nf "$text-color" \
+-sb "$urgent-bg-color-no-t" -sf "$text-color" \
+-fn "pango:Source Code:10" -l 10
+
+# Terminal (ws1)
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal \
+; exec --no-startup-id i3-msg workspace $ws1
+for_window [class="Alacritty"] move to workspace $ws1
+
+# Chrome (ws2)
+bindsym $mod+n exec --no-startup-id google-chrome-stable \
+; exec --no-startup-id i3-msg workspace $ws2
+bindsym $mod+Shift+n exec --no-startup-id google-chrome-stable --incognito \
+; exec --no-startup-id i3-msg workspace $ws2
+for_window [class="Google-chrome"] move to workspace $ws2
+
+# Ranger (ws3)
+bindsym $mod+r exec --no-startup-id i3-sensible-terminal --class "ranger" -e ranger \
+; exec --no-startup-id i3-msg workspace $ws3
+for_window [class="Alacritty" instance="ranger"] move to workspace $ws3
+
+# Discord (ws4)
+for_window [class="discord"] move to workspace $ws4
+
+# htop (tareas)
+bindsym $mod+o exec --no-startup-id i3-sensible-terminal --class "htop" -e htop \
+; exec --no-startup-id i3-msg workspace $ws9
+for_window [class="Alacritty" instance="htop"] move to workspace $ws9 
+
+# KeePass (ws10)
+for_window [class="KeePassXC"] move to workspace $ws10
+
+# -----------------  5. APPEARANCE -----------------  
+
+# No title bars, no/thin borders, gaps between windows 
+default_border pixel 2 
+#smart_gaps on
+smart_borders on
+gaps inner 10
+
+# Colours
+# Type			            Border			        Background		    Text			        Indicator 
+client.focused		        $border-color		    $bg-color		    $text-color		        #00ff00
+client.unfocused	        $inactive-border-color	$inactive-bg-color	$inactive-text-color	#00ff00
+client.focused_inactive	    $inactive-border-color	$inactive-bg-color	$inactive-text-color	#00ff00
+client.urgent		        $urgent-border-color	$urgent-bg-color	$text-color		        #00ff00
+
+# -----------------  6. STATUS BAR  -----------------  
+
+# Run nm-applet for NetworkManager integration 
+exec --no-startup-id nm-applet
+
+# Run i3bar
+bar {
+    i3bar_command i3bar -t
+	status_command i3status --config $HOME/.config/i3/i3status.conf 
+	# $HOME/.config/i3/i3status.sh
+
+	position top
+	strip_workspace_numbers yes
+
+	#Colours
+	colors {
+		background $bg-color 
+		separator #757575
+		# Type			    Border			        Background		    Text
+		focused_workspace	$border-color		    $bg-color		    $text-color
+		inactive_workspace	$inactive-border-color	$inactive-bg-color	$inactive-text-color
+		urgent_workspace	$urgent-border-color	$urgent-bg-color	$text-color
+	}
+}
+
+# -----------------  7. AUTORUN  -----------------  
+
+# Enables double tap click on touchpads 
+exec --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+
+# Restores background
+exec --no-startup-id nitrogen --restore
+
+# Custom composer
+exec --no-startup-id picom --experimental-backends --config $HOME/.config/picom/picom.conf
+
+# Other applications
+exec --no-startup-id i3-sensible-terminal
+exec --no-startup-id i3-sensible-terminal --class="ranger" -e ranger
+exec --no-startup-id i3-sensible-terminal --class="htop" -e htop
+exec --no-startup-id discord
+exec --no-startup-id google-chrome-stable
+exec --no-startup-id keepassxc 
